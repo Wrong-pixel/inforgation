@@ -1441,16 +1441,11 @@ sup.md-footnote {
   color: #f0f0f0 !important;
 }
 
-#write > p:first-child:not(:only-child)::before, #write > p:only-child::before {
-  background: url("file:///Users/wuweiwei/Library/Application%20Support/abnerworks.Typora/themes/ursine/day.png") no-repeat 55% 90% transparent;
-  background-size: cover;
-}
-
 
  @media print { @page {margin: 0 0 0 0;} body.typora-export {padding-left: 0; padding-right: 0;} #write {padding:0;}}
 </style><title></title>
 </head>
 <body class='typora-export'><div class='typora-export-content'>
-<div id='write'  class=''><script src="https://cdn.plot.ly/plotly-latest.min.js"></script><h1 id='针对-ip-的情报聚合报告'><span>针对{{ IP }}的情报聚合报告</span></h1><p><span>本报告基于{{ times }}发起的对{{ IP }}的情报查询结果生成</span></p><p><span>{% for table in tables %}</span></p><p><span>	</span><span>{% for table_name, table_html in table.items() %}</span></p><h2 id='-tablename-'><span>{{ table_name }}</span></h2><p><span>		</span><span>{{ table_html }}</span></p><p><span>	</span><span>{% endfor %}</span></p><p><span>{% endfor %}</span></p><p>&nbsp;</p></div></div>
+<div id='write'  class=''><h1 id='针对-ip-的情报聚合报告'><span>针对{{ IP }}的情报聚合报告</span></h1><p><span>本报告基于{{ times }}发起的对{{ IP }}的情报查询结果生成</span></p><p><span>{% for table in tables %}</span></p><p><span>	</span><span>{% for table_name, table_html in table.items() %}</span></p><h2 id='-tablename-'><span>{{ table_name }}</span></h2><p><span>		</span><span>{{ table_html }}</span></p><p><span>	</span><span>{% endfor %}</span></p><p><span>{% endfor %}</span></p><p>&nbsp;</p></div></div>
 </body>
 </html>
