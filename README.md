@@ -31,7 +31,7 @@ ps:已知问题：shodan平台查询结果输出到报告时，会出现将特�
 
 >[zoomeye 平台](https://www.zoomeye.org/)
 >
->(zoomeye apiley获取地址)[https://www.zoomeye.org/profile]
+>[zoomeye apiley获取地址](https://www.zoomeye.org/profile)
 
 ### and more......
 # 使用方法：
