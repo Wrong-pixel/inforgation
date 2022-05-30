@@ -91,7 +91,7 @@ Powered by Wrong-pixel |___/          version 0.2
 
     if args.filename:
         file_name = args.filename
-        table_list = []
+    table_list = []
     try:
         if threatbook_table is not None:
             table_list.append({"微步": threatbook_table})
