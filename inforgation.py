@@ -4,6 +4,7 @@ from modules import threatbook
 from modules import shodan
 from modules import _0zero
 from modules import output
+from modules import zoomeye
 
 from rich.traceback import install
 from rich.console import Console
@@ -26,7 +27,7 @@ if __name__ == '__main__':
 | | '_ \| |_ / _ \| '__/ _` |/ _` | __| |/ _ \| '_ \ 
 | | | | |  _| (_) | | | (_| | (_| | |_| | (_) | | | |
 |_|_| |_|_|  \___/|_|  \__, |\__,_|\__|_|\___/|_| |_|
-Powered by Wrong-pixel |___/          version 0.1   
+Powered by BigBigBan   |___/          version 0.1   
     """)
     # 命令行参数解析
     parser = argparse.ArgumentParser()
@@ -78,22 +79,52 @@ Powered by Wrong-pixel |___/          version 0.1
             _0zero_table = _0zero.get_result(ip)
             console.print(_0zero_table if _0zero_table is not None else "")
 
+        if cfg['zoomeye']['apikey'] == "":
+            console.print("[red][WRONG] zoomeye配置信息缺失！本次不予查询！")
+        else:
+            zoomeye = zoomeye.zoomeye(cfg['zoomeye']['apikey'])
+            # zoomeye查询结果
+            zoomeye_table = zoomeye.get_result(ip)
+            console.print(zoomeye_table if zoomeye_table is not None else "")
+
     file_name = args.ip + "-" + time.strftime('%Y-%m-%d-%H:%M:%S')
 
     if args.filename:
         file_name = args.filename
-    table_list = []
+        table_list = []
     try:
         if threatbook_table is not None:
             table_list.append({"微步": threatbook_table})
+    except BaseException:
+        pass
+
+    try:
         if hunter_table is not None:
             table_list.append({"鹰图": hunter_table})
+    except BaseException:
+        pass
+
+    try:
         if fofa_table is not None:
             table_list.append({"FOFA": fofa_table})
+    except BaseException:
+        pass
+
+    try:
         if shodan_table is not None:
             table_list.append({"shodan": shodan_table})
+    except BaseException:
+        pass
+
+    try:
         if _0zero_table is not None:
             table_list.append({"0zero": _0zero_table})
+    except BaseException:
+        pass
+
+    try:
+        if zoomeye_table is not None:
+            table_list.append({"zoomeye": zoomeye_table})
     except BaseException:
         pass
 
