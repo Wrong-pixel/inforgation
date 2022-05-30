@@ -68,6 +68,11 @@ apikey =
 # 0zero地址：https://0.zone/
 # 0zero APIKEY获取地址：https://0.zone/applyParticulars?type=site
 apikey = 
+
+[zoomeye]
+# zoomeye地址：https://www.zoomeye.org/
+# zoomeye APIKEY获取地址：https://www.zoomeye.org/profile
+apikey=
 ```
 3、运行：`python3 inforgation.py`，使用`-i`参数指定要查询的单个IP，使用`-o`参数指定输出的文件名，如：
 `python3 inforgation.py -i 114.114.114.114 -o gogole`，运行结果如下：

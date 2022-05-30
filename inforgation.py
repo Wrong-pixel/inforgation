@@ -27,7 +27,7 @@ if __name__ == '__main__':
 | | '_ \| |_ / _ \| '__/ _` |/ _` | __| |/ _ \| '_ \ 
 | | | | |  _| (_) | | | (_| | (_| | |_| | (_) | | | |
 |_|_| |_|_|  \___/|_|  \__, |\__,_|\__|_|\___/|_| |_|
-Powered by Wrong-pixel |___/          version 0.1   
+Powered by Wrong-pixel |___/          version 0.2   
     """)
     # 命令行参数解析
     parser = argparse.ArgumentParser()
