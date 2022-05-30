@@ -37,7 +37,7 @@ ps:已知问题：shodan平台查询结果输出到报告时，会出现将特�
 # 使用方法：
 1、clone至本地后首先安装依赖
 
-`pip(3) -r requirements.txt -i https://mirrors.aliyun.com/pypi/simple/
+`pip(3) install -r requirements.txt -i https://mirrors.aliyun.com/pypi/simple/
 `
 
 2、接着配置config.ini，往里面添加自己的APIKEY，config.ini如下：
