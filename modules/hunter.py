@@ -24,7 +24,7 @@ class hunter:
         try:
             # 超时处理，默认为5秒
             self.data = requests.get(self.url, timeout=timeout).json()
-        except requests.ReadTimeout:
+        except BaseException as e:
             console.print("[red][WRONG] 查询鹰图信息超时")
             return None
         if self.data['code'] != 200:
@@ -70,3 +70,9 @@ class hunter:
             console.print('[yellow][WARNING] 没有在鹰图上查询到 %s 的相关信息' % ip)
             return None
         # 返回table对象
+
+    def get_domain(self):
+        try:
+            return self.table.columns[3]._cells
+        except BaseException as e:
+            return []

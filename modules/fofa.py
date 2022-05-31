@@ -2,6 +2,7 @@ import requests
 from base64 import b64encode
 from rich.table import Table
 from rich.console import Console
+import re
 
 console = Console()
 
@@ -16,7 +17,7 @@ class fofa:
         self.table = Table()
         console.rule('[green][INFO] 正在FOFA上查询 %s 的信息...' % ip)
         # base64编码查询语句
-        words = b64encode(bytes(str(ip).encode())).decode()
+        words = b64encode(bytes('ip="{}"'.format(str(ip)).encode())).decode()
         # 拼接url
         self.url = 'https://fofa.info/api/v1/search/all?email={}&key={}&qbase64={}&fields=host,title,country_name,' \
                    'province,city,server,protocol,banner,isp'.format(
@@ -26,6 +27,8 @@ class fofa:
         except requests.ReadTimeout:
             console.print("[red][WRONG] 查询FOFA信息超时!")
             return None
+        except BaseException:
+            console.print('[red][WRONG] 查询FOFA出错!(原因是在FOFA查询时，个别IP使用语法ip="*.*.*.*"会报错)')
         # api请求错误
         if self.data['error']:
             console.print("[red][WRONG] FOFA查询 %s 失败！" % ip)
@@ -41,3 +44,15 @@ class fofa:
         for item in self.data['results']:
             self.table.add_row(item[0], item[1], item[2] + " " + item[3] + " " + item[4], item[5], item[6])
         return self.table
+
+    def get_domain(self):
+        try:
+            content = re.compile(r'[a-zA-Z]')
+            domain_list = []
+            for item in self.table.columns[0]._cells:
+                item = item.replace("https://", "").replace("http://", "")
+                if re.match(content, item):
+                    domain_list.append(item)
+            return domain_list
+        except BaseException as e:
+            return []

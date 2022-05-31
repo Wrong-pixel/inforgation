@@ -9,9 +9,9 @@ class shodan:
 
     def __init__(self, apikey):
         self.apikey = apikey
-        self.table = Table()
 
     def get_result(self, ip, timeout=5):
+        self.table = Table()
         console.rule('[green][INFO] 正在shodan上查询 %s 的信息...' % ip)
         self.url = "https://api.shodan.io/shodan/host/{}?key={}".format(ip, self.apikey)
         try:
@@ -65,3 +65,9 @@ class shodan:
             self.table.add_row(target_ip, target_port[:-1], target_domain, target_hostname[:-1], target_isp)
 
             return self.table
+
+    def get_domain(self):
+        try:
+            return self.table.columns[3]._cells[0].split("、")
+        except BaseException:
+            return []

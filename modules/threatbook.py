@@ -50,3 +50,6 @@ class threatbook:
         self.table.add_row(target_severity, target_judgments[:-1], target_tags, target_carrier, target_location,
                            target_scene, target_confidence_level)
         return self.table
+
+    def get_domain(self):
+        return self.table
