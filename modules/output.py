@@ -31,7 +31,7 @@ class output:
                 # 将tables对象转化为html语言后重新生成一个字典并放入tables列表
                 tables.append({k: self.get_html(v)})
         html = template.render(times=check_time, tables=tables, IP=self.ip)
-        with open("./output/{}.html".format(self.file_name), "w") as f:
+        with open("./output/{}.html".format(self.file_name), "w", encoding='utf-8') as f:
             f.write(html)
         f.close()
 
