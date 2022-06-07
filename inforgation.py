@@ -44,85 +44,85 @@ def get_single_ip(ip, file_name):
         hunter_table = hunter.get_result(ip)
         print_table(hunter_table)
 
-        # fofa查询结果
-        if cfg['fofa']['mail'] == "" or cfg['fofa']['apikey'] == "":
-            console.print("[red][WRONG] fofa配置信息缺失！本次不予查询！")
-        else:
-            fofa = modules.fofa.fofa(cfg['fofa']['mail'], cfg['fofa']['apikey'])
-            fofa_table = fofa.get_result(ip)
-            print_table(fofa_table)
+    # fofa查询结果
+    if cfg['fofa']['mail'] == "" or cfg['fofa']['apikey'] == "":
+        console.print("[red][WRONG] fofa配置信息缺失！本次不予查询！")
+    else:
+        fofa = modules.fofa.fofa(cfg['fofa']['mail'], cfg['fofa']['apikey'])
+        fofa_table = fofa.get_result(ip)
+        print_table(fofa_table)
 
-        # 微步查询结果
-        if cfg['微步/weibu']['apikey'] == "":
-            console.print("[red][WRONG] 微步配置信息缺失！本次不予查询！")
-        else:
-            threatbook = modules.threatbook.threatbook(cfg['微步/weibu']['apikey'])
-            threatbook_table = threatbook.get_result(ip)
-            print_table(threatbook_table)
+    # 微步查询结果
+    if cfg['微步/weibu']['apikey'] == "":
+        console.print("[red][WRONG] 微步配置信息缺失！本次不予查询！")
+    else:
+        threatbook = modules.threatbook.threatbook(cfg['微步/weibu']['apikey'])
+        threatbook_table = threatbook.get_result(ip)
+        print_table(threatbook_table)
 
-        # shodan查询结果
-        if cfg['shodan']['apikey'] == "":
-            console.print("[red][WRONG] shodan配置信息缺失！本次不予查询！")
-        else:
-            shodan = modules.shodan.shodan(cfg['shodan']['apikey'])
-            shodan_table = shodan.get_result(ip)
-            print_table(shodan_table)
+    # shodan查询结果
+    if cfg['shodan']['apikey'] == "":
+        console.print("[red][WRONG] shodan配置信息缺失！本次不予查询！")
+    else:
+        shodan = modules.shodan.shodan(cfg['shodan']['apikey'])
+        shodan_table = shodan.get_result(ip)
+        print_table(shodan_table)
 
-        # 0zero查询结果
-        if cfg['0zero']['apikey'] == "":
-            console.print("[red][WRONG] 0zero配置信息缺失！本次不予查询！")
-        else:
-            _0zero = modules._0zero._0zero(cfg['0zero']['apikey'])
-            _0zero_table = _0zero.get_result(ip)
-            print_table(_0zero_table)
+    # 0zero查询结果
+    if cfg['0zero']['apikey'] == "":
+        console.print("[red][WRONG] 0zero配置信息缺失！本次不予查询！")
+    else:
+        _0zero = modules._0zero._0zero(cfg['0zero']['apikey'])
+        _0zero_table = _0zero.get_result(ip)
+        print_table(_0zero_table)
 
-        # zoomeye查询结果
-        if cfg['zoomeye']['apikey'] == "":
-            console.print("[red][WRONG] zoomeye配置信息缺失！本次不予查询！")
-        else:
-            zoomeye = modules.zoomeye.zoomeye(cfg['zoomeye']['apikey'])
-            zoomeye_table = zoomeye.get_result(ip)
-            print_table(zoomeye_table)
+    # zoomeye查询结果
+    if cfg['zoomeye']['apikey'] == "":
+        console.print("[red][WRONG] zoomeye配置信息缺失！本次不予查询！")
+    else:
+        zoomeye = modules.zoomeye.zoomeye(cfg['zoomeye']['apikey'])
+        zoomeye_table = zoomeye.get_result(ip)
+        print_table(zoomeye_table)
 
-        if file_name == "":
-            file_name = ip + "-" + time.strftime('%Y-%m-%d-%H:%M:%S')
+    if file_name == "":
+        file_name = ip + "-" + time.strftime('%Y-%m-%d-%H:%M:%S')
 
-        table_list = []
-        domain_list = []
-        if threatbook_table is not None:
-            table_list.append({"微步": threatbook_table})
+    table_list = []
+    domain_list = []
+    if threatbook_table is not None:
+        table_list.append({"微步": threatbook_table})
 
-        if hunter_table is not None:
-            table_list.append({"鹰图": hunter_table})
-            domain_list += hunter.get_domain()
+    if hunter_table is not None:
+        table_list.append({"鹰图": hunter_table})
+        domain_list += hunter.get_domain()
 
-        if fofa_table is not None:
-            table_list.append({"FOFA": fofa_table})
-            domain_list += fofa.get_domain()
+    if fofa_table is not None:
+        table_list.append({"FOFA": fofa_table})
+        domain_list += fofa.get_domain()
 
-        if shodan_table is not None:
-            table_list.append({"shodan": shodan_table})
-            domain_list += shodan.get_domain()
+    if shodan_table is not None:
+        table_list.append({"shodan": shodan_table})
+        domain_list += shodan.get_domain()
 
-        if _0zero_table is not None:
-            table_list.append({"0zero": _0zero_table})
+    if _0zero_table is not None:
+        table_list.append({"0zero": _0zero_table})
 
-        if zoomeye_table is not None:
-            table_list.append({"zoomeye": zoomeye_table})
+    if zoomeye_table is not None:
+        table_list.append({"zoomeye": zoomeye_table})
 
-        # 处理域名结果，暂时不准备封装成类了，因为get_domain方法是在每个模块类中定义的，如果需要抽象成类的话需要传入类对象
-        # 不封白不封，传列表
-        if domain_list:
-            domain = modules.domain.domain(list(set(domain_list)))
-            domain_table = domain.get_result()
-            if domain_table is not None:
-                console.print(domain_table)
-                table_list.append({"域名结果": domain_table})
+    # 处理域名结果，暂时不准备封装成类了，因为get_domain方法是在每个模块类中定义的，如果需要抽象成类的话需要传入类对象
+    # 不封白不封，传列表
+    if domain_list:
+        domain = modules.domain.domain(list(set(domain_list)))
+        domain_table = domain.get_result()
+        if domain_table is not None:
+            console.print(domain_table)
+            table_list.append({"域名结果": domain_table})
 
-        output = modules.output.output(ip, file_name, table_list)
-        # 调用方法
-        output.output_html()
-        console.print("[green][INFO] 信息查询完毕，报告保存为%s/output/%s.html" % (sys.path[0], file_name))
+    output = modules.output.output(ip, file_name, table_list)
+    # 调用方法
+    output.output_html()
+    console.print("[green][INFO] 信息查询完毕，报告保存为%s/output/%s.html" % (sys.path[0], file_name))
 
 
 # 为了实现批量查询，需要将单个查询的方法进行封装
