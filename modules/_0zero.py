@@ -31,8 +31,8 @@ class _0zero:
         }
         try:
             text = requests.request("POST", url, data=query, timeout=timeout).json()
-        except requests.ReadTimeout:
-            console.print("[red][WRONG] 查询0zero信息超时")
+        except BaseException as e:
+            console.print("[red][WRONG] 查询0zero信息超时，错误信息为%s" % e)
             return None
         if text['code'] == 1:
             console.print("[red][WRONG] 查询出错，错误信息为: %s " % (text['message']))
