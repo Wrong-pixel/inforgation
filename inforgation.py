@@ -24,7 +24,6 @@ install(show_locals=True)
 
 # 忘了为啥把打印table的过程抽象成方法了。。。但是不影响用就不改了
 def print_table(table: Table):
-    progress.console.print()
     progress.console.print(table if table is not None else "")
 
 
