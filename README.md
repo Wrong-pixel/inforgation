@@ -1,7 +1,6 @@
 # inforgation蓝队信息聚合查询工具
 
-### 某次蓝队值守时写的，没有算法基础，各种逻辑写得比较一般
-### 特别感谢[狼组安全团队的TIG 威胁情报收集](https://github.com/wgpsec/tig#tig--%E5%A8%81%E8%83%81%E6%83%85%E6%8A%A5%E6%94%B6%E9%9B%86-) ,本工具也是在TIG的基础上进行开发，加入了更多平台的查询
+### 特别感谢[狼组安全团队的TIG 威胁情报收集](https://github.com/wgpsec/tig#tig--%E5%A8%81%E8%83%81%E6%83%85%E6%8A%A5%E6%94%B6%E9%9B%86-) ,本工具也是在TIG的基础上进行开发，加入了更多平台的查询，各位师傅如有比较好的平台开放API接口的，也可提交issue。
 
 # 由于接入平台的增多，不同平台的API响应速度会影响到查询速度，请根据自身需求配置APIKEY，APIKEY为空则不会通过该平台进行情报检索，目前已知对查询速度影响较大的API有shodan和zoomeye
 
@@ -78,7 +77,7 @@ apikey =
 # zoomeye APIKEY获取地址：https://www.zoomeye.org/profile
 apikey=
 ```
-3、运行：`python3 inforgation.py`，使用`-i`参数指定要查询的单个IP，使用`-o`参数指定输出的文件名，如：
+3、运行：`python3 inforgation.py`，使用`-i`参数指定要查询的单个IP；使用-f指定批量查询的文件，IP存放在文件中，一行一个；使用`-o`参数指定输出的文件名，如：
 `python3 inforgation.py -i 129.211.129.109 -o gogole`，运行结果如下：
 
 ```shell
@@ -175,7 +174,7 @@ Powered by Wrong-pixel |___/          version 1.1
 
 # TODO
 - [x] 批量查询
-- [x] 算法优化（看到一大堆if else自己都头大）
+- [x] 算法优化
 - [x] 情报聚合后的去重
 - [ ] 域名反查、whois查询
 - [x] 添加更多平台查询
