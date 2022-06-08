@@ -1,8 +1,8 @@
-from rich.console import Console
 from rich.table import Table
+from rich.progress import Progress
 import requests
 
-console = Console()
+progress = Progress()
 
 
 class _0zero:
@@ -11,7 +11,7 @@ class _0zero:
         self.apikey = apikey
 
     def get_result(self, ip, timeout=5):
-        console.rule('[green][INFO] 正在0zero上查询 %s 的威胁情报...' % ip)
+        progress.console.rule('[green][INFO] 正在0zero上查询 %s 的威胁情报...' % ip)
         self.table = Table()
         self.table.add_column("IP", justify="left")
         self.table.add_column("端口", justify="left")
@@ -32,13 +32,13 @@ class _0zero:
         try:
             text = requests.request("POST", url, data=query, timeout=timeout).json()
         except BaseException as e:
-            console.print("[red][WRONG] 查询0zero信息超时，错误信息为%s" % e)
+            progress.console.print("[red][WRONG] 查询0zero信息超时，错误信息为%s" % e)
             return None
         if text['code'] == 1:
-            console.print("[red][WRONG] 查询出错，错误信息为: %s " % (text['message']))
+            progress.console.print("[red][WRONG] 查询出错，错误信息为: %s " % (text['message']))
             return None
         if not text['data']:
-            console.print("[yellow][WARNING] 没有在0zero平台查询到相关信息!")
+            progress.console.print("[yellow][WARNING] 没有在0zero平台查询到相关信息!")
             return None
         for item in text['data']:
             target_ip = item["ip"] if item["ip"] else "N/A"

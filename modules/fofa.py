@@ -1,10 +1,10 @@
 import requests
 from base64 import b64encode
 from rich.table import Table
-from rich.console import Console
+from rich.progress import Progress
 import re
 
-console = Console()
+progress = Progress()
 
 
 class fofa:
@@ -15,7 +15,7 @@ class fofa:
 
     def get_result(self, ip, timeout=5):
         self.table = Table()
-        console.rule('[green][INFO] 正在FOFA上查询 %s 的信息...' % ip)
+        progress.console.rule('[green][INFO] 正在FOFA上查询 %s 的信息...' % ip)
         # base64编码查询语句
         words = b64encode(bytes('ip="{}"'.format(str(ip)).encode())).decode()
         # 拼接url
@@ -25,16 +25,16 @@ class fofa:
         try:
             self.data = requests.get(self.url, timeout=timeout).json()
         except requests.ReadTimeout:
-            console.print("[red][WRONG] 查询FOFA信息超时!")
+            progress.console.print("[red][WRONG] 查询FOFA信息超时!")
             return None
         except BaseException:
-            console.print('[red][WRONG] 查询FOFA出错!(原因是在FOFA查询时，个别IP使用语法ip="*.*.*.*"会报错)')
+            progress.console.print('[red][WRONG] 查询FOFA出错!(原因是在FOFA查询时，个别IP使用语法ip="*.*.*.*"会报错)')
         # api请求错误
         if self.data['error']:
-            console.print("[red][WRONG] FOFA查询 %s 失败！" % ip)
+            progress.console.print("[red][WRONG] FOFA查询 %s 失败！" % ip)
             return None
         if self.data['size'] == 0:
-            console.print("[yellow][WARNING] 没有在FOFA上查询到 %s 的相关信息！" % ip)
+            progress.console.print("[yellow][WARNING] 没有在FOFA上查询到 %s 的相关信息！" % ip)
             return None
         self.table.add_column('host', justify="left")
         self.table.add_column('标题', justify="left")

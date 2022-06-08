@@ -1,9 +1,9 @@
 import requests
 from base64 import b64encode
 from rich.table import Table
-from rich.console import Console
+from rich.progress import Progress
 
-console = Console()
+progress = Progress()
 
 
 class hunter:
@@ -14,7 +14,7 @@ class hunter:
 
     def get_result(self, ip, timeout=5):
         self.table = Table()
-        console.rule('[green][INFO] 正在鹰图上查询 %s 的信息...' % ip)
+        progress.console.rule('[green][INFO] 正在鹰图上查询 %s 的信息...' % ip)
         # base64加密查询语句
         words = b64encode(bytes('ip="{}"'.format(ip).encode())).decode()
         # 拼接url
@@ -25,15 +25,15 @@ class hunter:
             # 超时处理，默认为5秒
             self.data = requests.get(self.url, timeout=timeout).json()
         except BaseException as e:
-            console.print("[red][WRONG] 查询鹰图信息超时")
+            progress.console.print("[red][WRONG] 查询鹰图信息超时")
             return None
         if self.data['code'] != 200:
-            console.print("[red][WRONG] 查询鹰图信息失败！%s " % (self.data['message']))
+            progress.console.print("[red][WRONG] 查询鹰图信息失败！%s " % (self.data['message']))
             return None
         # 消耗积分
-        console.print("[green][INFO] "+self.data['data']['consume_quota'])
+        progress.console.print("[green][INFO] "+self.data['data']['consume_quota'])
         # 剩余积分
-        console.print("[green][INFO] "+self.data['data']['rest_quota'])
+        progress.console.print("[green][INFO] "+self.data['data']['rest_quota'])
         # 创建输出表
         self.table.add_column('url', justify="left")
         self.table.add_column('端口', justify="left")
@@ -67,7 +67,7 @@ class hunter:
             return self.table
         except TypeError:
             # 可能是没查到结果，也可能是查询速度过快
-            console.print('[yellow][WARNING] 没有在鹰图上查询到 %s 的相关信息' % ip)
+            progress.console.print('[yellow][WARNING] 没有在鹰图上查询到 %s 的相关信息' % ip)
             return None
         # 返回table对象
 

@@ -1,8 +1,8 @@
 import requests
 from rich.table import Table
-from rich.console import Console
+from rich.progress import Progress
 
-console = Console()
+progress = Progress()
 
 
 class shodan:
@@ -12,16 +12,16 @@ class shodan:
 
     def get_result(self, ip, timeout=5):
         self.table = Table()
-        console.rule('[green][INFO] 正在shodan上查询 %s 的信息...' % ip)
+        progress.console.rule('[green][INFO] 正在shodan上查询 %s 的信息...' % ip)
         self.url = "https://api.shodan.io/shodan/host/{}?key={}".format(ip, self.apikey)
         try:
             self.data = requests.get(self.url, timeout=timeout).json()
         except BaseException as e:
-            console.print("[red][WRONG] shodan查询失败！IP格式错误或请求超时! 错误信息为: %s " % e)
+            progress.console.print("[red][WRONG] shodan查询失败！IP格式错误或请求超时! 错误信息为: %s " % e)
             return None
 
         if 'error' in self.data:
-            console.print('[yellow][WARNING] 没有在shodan上查询到 %s 的相关信息' % ip)
+            progress.console.print('[yellow][WARNING] 没有在shodan上查询到 %s 的相关信息' % ip)
             return None
         else:
             try:
@@ -34,7 +34,7 @@ class shodan:
                 for item in self.data['ports']:
                     target_port += str(item) + "、"
             except BaseException as e:
-                console.log(e)
+                progress.console.log(e)
                 target_port = ""
 
             try:

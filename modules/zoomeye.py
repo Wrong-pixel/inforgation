@@ -1,8 +1,8 @@
 import requests
-from rich.console import Console
+from rich.progress import Progress
 from rich.table import Table
 
-console = Console()
+progress = Progress()
 
 
 class zoomeye:
@@ -12,7 +12,7 @@ class zoomeye:
 
     def get_result(self, ip, timeout=10):
         self.table = Table()
-        console.rule('[green][INFO] 正在zoomeye上查询 %s 的信息...' % ip)
+        progress.console.rule('[green][INFO] 正在zoomeye上查询 %s 的信息...' % ip)
         url = "https://api.zoomeye.org/host/search?query=%s" % ip
         headers = {
             "API-KEY": self.apikey
@@ -20,7 +20,7 @@ class zoomeye:
         try:
             data = requests.request("GET", url=url, headers=headers, timeout=timeout).json()
         except BaseException as e:
-            console.print("[red][WRONG] 查询zoomeye信息超时！")
+            progress.console.print("[red][WRONG] 查询zoomeye信息超时！")
             return None
         if data['total'] != 0:
             self.table.add_column("IP", justify="left")
@@ -37,5 +37,5 @@ class zoomeye:
                 self.table.add_row(target_ip, target_hostname, target_port, target_service, target_title)
             return self.table
         else:
-            console.print('[yellow][WARNING] 没有在zoomeye上查询到 %s 的相关信息' % ip)
+            progress.console.print('[yellow][WARNING] 没有在zoomeye上查询到 %s 的相关信息' % ip)
             return None

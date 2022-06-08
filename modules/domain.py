@@ -1,7 +1,7 @@
 from rich.table import Table
-from rich.console import Console
+from rich.progress import Progress
 
-console = Console()
+progress = Progress()
 
 
 class domain:
@@ -21,7 +21,7 @@ class domain:
         if not self.domain_list:
             return None
         # 打个横幅
-        console.rule('[green][INFO]域名结果汇总')
+        progress.console.rule('[green][INFO]域名结果汇总')
         # 实例化一个空table
         table = Table()
         # 列标题

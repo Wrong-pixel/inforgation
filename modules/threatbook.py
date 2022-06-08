@@ -1,8 +1,8 @@
 import requests
 from rich.table import Table
-from rich.console import Console
+from rich.progress import Progress
 
-console = Console()
+progress = Progress()
 
 
 class threatbook:
@@ -11,7 +11,7 @@ class threatbook:
 
     def get_result(self, ip, timeout=5):
         self.table = Table()
-        console.rule('[green][INFO] 正在微步上查询 %s 的威胁情报...' % ip)
+        progress.console.rule('[green][INFO] 正在微步上查询 %s 的威胁情报...' % ip)
         self.url = "https://api.threatbook.cn/v3/scene/ip_reputation"
         query = {
             "apikey": self.apikey,
@@ -21,10 +21,10 @@ class threatbook:
         try:
             self.data = requests.request("GET", self.url, params=query, timeout=timeout).json()
         except requests.ReadTimeout:
-            console.print("[red][WRONG] 查询微步信息超时")
+            progress.console.print("[red][WRONG] 查询微步信息超时")
             return None
         if self.data['response_code']:
-            console.print(
+            progress.console.print(
                 "[red][WRONG]微步查询失败！错误码：%s ，错误信息: %s " % (self.data['response_code'], self.data['verbose_msg']))
             return None
         self.data = self.data['data'][ip]
