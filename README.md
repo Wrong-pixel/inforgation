@@ -1,8 +1,8 @@
 # inforgation蓝队信息聚合查询工具
 
-### 特别感谢[狼组安全团队的TIG 威胁情报收集](https://github.com/wgpsec/tig#tig--%E5%A8%81%E8%83%81%E6%83%85%E6%8A%A5%E6%94%B6%E9%9B%86-) ,本工具也是在TIG的基础上进行开发，加入了更多平台的查询，各位师傅如有比较好的平台开放API接口的，也可提交issue。
-
 # GUI版本已经开发完成，请移步[inforGUI](https://github.com/Wrong-pixel/inforGUI)，命令行版本将不再进行功能更新，如果遇到bug可以提交issue
+
+### 特别感谢[狼组安全团队的TIG 威胁情报收集](https://github.com/wgpsec/tig#tig--%E5%A8%81%E8%83%81%E6%83%85%E6%8A%A5%E6%94%B6%E9%9B%86-) ,本工具也是在TIG的基础上进行开发，加入了更多平台的查询，各位师傅如有比较好的平台开放API接口的，也可提交issue。
 
 ### ps:由于接入平台的增多，不同平台的API响应速度会影响到查询速度，请根据自身需求配置APIKEY，APIKEY为空则不会通过该平台进行情报检索，目前已知对查询速度影响较大的API有shodan和zoomeye
 
